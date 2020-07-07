@@ -56,20 +56,30 @@ export default new Vuex.Store({
           })
     },
     [EDIT_ITEM]: ({ commit }, { id, name, age, phone, email }) => {
-      axios.put(url, {
-        id,
-        name,
-        age,
-        phone,
-        email
-      })
-          .then(resp => {
-            console.log('RESP', resp.data)
-            commit(GET_DATA)
-          })
-          .catch(e => {
-            console.log(e)
-          })
+      const options = {
+        method: 'update',
+        headers: {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+        },
+        url: url,
+        data: {
+          id,
+          name,
+          age,
+          phone,
+          email
+        },
+      }
+      axios(options)
+        .then(resp => {
+          console.log('RESP', resp.data)
+          commit(GET_DATA)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     }
   },
   getters: {
